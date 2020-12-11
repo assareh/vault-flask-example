@@ -19,4 +19,4 @@ kubectl get deployments vault-flask-example
 kubectl get pods
 kubectl get secret test-secret
 sleep 6
-kubectl exec -i -t $(kubectl get pod -l app=vault-flask-example -o name) -- /bin/bash
+kubectl exec -i -t $(kubectl get pod -l app=vault-flask-example -o jsonpath="{.items[0].metadata.name}") -- /bin/bash

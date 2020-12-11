@@ -34,6 +34,7 @@ kubectl create serviceaccount vault-flask-example
 #### 06_start_webapp_with_vault.sh
 
 We can delegate the auth to the sidecar, and incorporate SDK commands into our app if we want using the token provided.
+`vault.hashicorp.com/agent-inject-token: "true"`
 
 #### 07_destroy.sh
 ```

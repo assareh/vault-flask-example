@@ -8,6 +8,7 @@ kubectl delete serviceaccount vault-flask-example
 kubectl create serviceaccount vault-flask-example
 
 # deleting before creating
+kubectl delete -f deployment.yaml
 kubectl delete -f deployment_with_vault.yaml
 
 # app with vault annotations
@@ -15,11 +16,18 @@ kubectl apply -f deployment_with_vault.yaml
 
 sleep 5
 
+POD=$(kubectl get pod -l app=vault-flask-example -o jsonpath="{.items[0].metadata.name}")
+
 # tail the init container
-kubectl logs -f $(kubectl get pods -l app=vault-flask-example -o name) vault-agent-init
+echo 'tail the init container logs'
+kubectl logs -f $POD vault-agent-init
 
 # exec into the app container
-kubectl exec -i -t $(kubectl get pod -l app=vault-flask-example -o name) vault-flask-example -- /bin/bash
+echo 'exec into the app container'
+kubectl exec -i -t $POD vault-flask-example -- /bin/ash
+echo 'tail the app container logs'
+kubectl logs -f $POD vault-flask-example
 
 # tail the sidecar
-kubectl logs -f $(kubectl get pods -l app=vault-flask-example -o name) vault-agent
+echo 'tail the sidecar container logs'
+kubectl logs -f $POD vault-agent

@@ -11,20 +11,25 @@ spec:
       app: vault-flask-example
   template:
     metadata:
-      annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-secret-secret: "secret/data/foo"
-        vault.hashicorp.com/secret-volume-path: "/etc/secret-volume"
-        vault.hashicorp.com/role: "vault-flask-example"
       labels:
         app: vault-flask-example
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "vault-flask-example"
+        vault.hashicorp.com/agent-inject-secret-foo: "secret/data/foo"
+        vault.hashicorp.com/secret-volume-path-foo: "/etc/secret-volume"
+        vault.hashicorp.com/agent-inject-secret-bar: "secret/data/bar"
+        vault.hashicorp.com/agent-inject-template-bar: |
+          {{ with secret "secret/data/bar" -}}
+            export BAR="{{ .Data.data.key }}"
+          {{- end }}
     spec:
       serviceAccountName: vault-flask-example
       automountServiceAccountToken: true
       containers:
       - name: vault-flask-example
         image: assareh/vault-flask-example:0.0.1
-        imagePullPolicy: IfNotPresent
+        args: ["sh", "-c", "source /vault/secrets/bar && python3 application.py"]
         ports:
         - containerPort: 5000
 ---
