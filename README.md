@@ -42,6 +42,6 @@ kubectl delete -f secret.yaml
 ```
 
 # updates
-kv v1 has a ttl (https://www.vaultproject.io/docs/secrets/kv/kv-v1#ttls)
-kv v2 ~5 mins (https://github.com/hashicorp/vault/issues/8287)
-dynamic, vault agent uses ttl to track it
+* kv v1 has a ttl (https://www.vaultproject.io/docs/secrets/kv/kv-v1#ttls)
+* kv v2 ~5 mins (https://github.com/hashicorp/vault/issues/8287)
+* dynamic, vault agent uses ttl to track it
