@@ -1,20 +1,47 @@
----
-page_type: sample
-description: "This is a minimal sample app that demonstrates how to run a Python Flask application on Azure App Service on Linux."
-languages:
-- python
-products:
-- azure
-- azure-app-service
----
+#### encode/decode the secret
+```
+base64 <<< "SuperSecr3tValue"
+echo 'U3VwZXJTZWNyM3RWYWx1ZQo=' | base64 --decode
+```
 
-# Python Flask sample for Azure App Service (Linux)
+#### 01_deploy_app.sh
+```
+kubectl apply -f secret.yaml
+kubectl apply -f deployment.yaml
+kubectl get deployments vault-flask-example
+kubectl get pods
+kubectl get secret test-secret
+kubectl exec -i -t $(kubectl get pod -l app=vault-flask-example -o name) -- /bin/bash
+```
 
-This is a minimal sample app that demonstrates how to run a Python Flask application on Azure App Service on Linux.
+#### view secret in pod
+```
+cd /etc/secret-volume
+ls
+cat secret
+```
 
-For more information, please see the [Python on App Service quickstart](https://docs.microsoft.com/azure/app-service/containers/quickstart-python).
+#### 02_start_vault.sh
+#### 03_create_service_account.sh
+#### 04_configure_k8s_auth_method.sh
+#### 05_setup_secret.sh
 
-## Notes
-* Please note this function will not work properly without an Azure identity assigned. This can be done in the Azure Portal in the [Settings, Identity pane of the App Service](https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=dotnet), or with az CLI.
-* Please note this function will not work properly without the HashiCorp Vault address and namespace in the app config. This can be done in the Azure Portal in the Settings, Configuration pane of the App Service, or with az CLI. Create an application setting named `VAULT_ADDR` with the address of your Vault instance, and an application setting named `VAULT_NAMESPACE` with the namespace you are using.
-* This function attempts to read a secret from a kv v2 mount located at secret/foo, and renders the value of the key named `key`.
+#### create a service account for the sidecar to use
+```
+kubectl create serviceaccount vault-flask-example
+```
+
+#### 06_start_webapp_with_vault.sh
+
+We can delegate the auth to the sidecar, and incorporate SDK commands into our app if we want using the token provided.
+
+#### 07_destroy.sh
+```
+kubectl delete -f deployment.yaml
+kubectl delete -f secret.yaml
+```
+
+# updates
+kv v1 has a ttl (https://www.vaultproject.io/docs/secrets/kv/kv-v1#ttls)
+kv v2 ~5 mins (https://github.com/hashicorp/vault/issues/8287)
+dynamic, vault agent uses ttl to track it

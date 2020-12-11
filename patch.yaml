@@ -1,0 +1,9 @@
+spec:
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-status: "update"
+        vault.hashicorp.com/agent-inject-secret-secret: "secret/data/foo"
+        vault.hashicorp.com/secret-volume-path: "/etc/secret-volume"
+        vault.hashicorp.com/role: "vault-flask-example"

@@ -1,0 +1,15 @@
+ui:
+  enabled: true
+  serviceType: "NodePort"
+
+server:
+  dev:
+    enabled: true
+  service:
+    enabled: true
+    type: NodePort
+    nodePort: 30000
+
+injector:
+  # True if you want to enable vault agent injection.
+  enabled: true

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-flask-example
+  labels:
+    app: vault-flask-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-flask-example
+  template:
+    metadata:
+      labels:
+        app: vault-flask-example
+    spec:
+      serviceAccountName: vault-flask-example
+      automountServiceAccountToken: true
+      containers:
+      - name: vault-flask-example
+        image: assareh/vault-flask-example:0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+          - name: secret-volume
+            mountPath: /etc/secret-volume
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: test-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault-flask-example
+spec:
+  type: NodePort
+  selector:
+    app: vault-flask-example
+  ports:
+      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: 5000
+      targetPort: 5000
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+      nodePort: 30001
+---
