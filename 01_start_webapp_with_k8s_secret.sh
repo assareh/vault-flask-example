@@ -19,4 +19,10 @@ kubectl get deployments vault-flask-example
 kubectl get pods
 kubectl get secret test-secret
 sleep 6
-kubectl exec -i -t $(kubectl get pod -l app=vault-flask-example -o jsonpath="{.items[0].metadata.name}") -- /bin/bash
+
+echo 'exec into the container and check the k8s secret at /etc/secret-volume'
+kubectl exec -i -t $(kubectl get pod -l app=vault-flask-example -o jsonpath="{.items[0].metadata.name}") -- /bin/ash
+
+# open browser window
+echo 'open app'
+open http://localhost:30001

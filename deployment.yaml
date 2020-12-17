@@ -19,7 +19,7 @@ spec:
       containers:
       - name: vault-flask-example
         image: assareh/vault-flask-example:0.0.1
-        imagePullPolicy: IfNotPresent
+        args: ["sh", "-c", "python3 application.py"]
         ports:
         - containerPort: 5000
         volumeMounts:

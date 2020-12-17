@@ -25,9 +25,17 @@ kubectl logs -f $POD vault-agent-init
 # exec into the app container
 echo 'exec into the app container'
 kubectl exec -i -t $POD vault-flask-example -- /bin/ash
+
+# tail the app container logs
 echo 'tail the app container logs'
 kubectl logs -f $POD vault-flask-example
 
 # tail the sidecar
 echo 'tail the sidecar container logs'
 kubectl logs -f $POD vault-agent
+
+# open browser windows
+echo 'open vault'
+open http://localhost:30000
+echo 'open app'
+open http://localhost:30001
