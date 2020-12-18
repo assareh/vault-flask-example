@@ -18,7 +18,7 @@ pip3 install -r requirements.txt
 python3 application.py
 ```
 
-Take a look at the code in `application.py` to see the request endpoints that we're exposing.
+Take a look at the code in `application.py` to see the request endpoints that we're exposing and what they do.
 
 ## steps
 ### build docker container
@@ -30,11 +30,22 @@ docker images
 
 NOTE: you'll need to edit the deployment manifests with the correct image name.
 
-Then run the shell scripts starting from `01_start_webapp_with_k8s_secret.sh`.
+Then run the shell scripts starting with `01_start_vault.sh`.
 
-We can delegate the auth to the sidecar, and incorporate SDK commands into our app if we want using the token provided by this annotation: `vault.hashicorp.com/agent-inject-token: "true"`.
+`00_start_webapp_with_k8s_secret.sh` is optional. It is the before state of with a k8s secret and without Vault.
+
+For applications that are Vault aware, you can incorporate SDK commands into the app and the sidecar will proxy those to Vault.
+
+```
+curl http://localhost:30001
+curl http://localhost:30001/foo
+curl http://localhost:30001/bar
+curl http://localhost:30001/vault
+```
 
 ## reference
+
+Jason's demo repo: https://github.com/jasonodonnell/vault-agent-demo/
 
 ### encode/decode the secret
 ```

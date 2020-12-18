@@ -7,7 +7,7 @@ APP = Flask(__name__)
 
 @APP.route('/')
 def hello_world():
-    return "Hello there :-D"
+    return "Hello :-D"
 
 
 @APP.route('/foo')
@@ -25,7 +25,8 @@ def bar():
 def vault():
     with open('/vault/secrets/token') as open_file:
         client = hvac.Client(
-            url='http://vault.default.svc:8200',
+            url='http://vault.default.svc:8200',  # this url should be updated
+            # to the local sidecar as it will proxy requests to vault
             token=open_file.read().rstrip()
         )
 

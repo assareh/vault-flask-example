@@ -22,6 +22,12 @@ POD=$(kubectl get pod -l app=vault-flask-example -o jsonpath="{.items[0].metadat
 echo 'tail the init container logs'
 kubectl logs -f $POD vault-agent-init
 
+# open browser windows
+# echo 'open vault'
+# open http://localhost:30000
+# echo 'open app'
+# open http://localhost:30001
+
 # exec into the app container
 echo 'exec into the app container'
 kubectl exec -i -t $POD vault-flask-example -- /bin/ash
@@ -30,12 +36,7 @@ kubectl exec -i -t $POD vault-flask-example -- /bin/ash
 echo 'tail the app container logs'
 kubectl logs -f $POD vault-flask-example
 
-# tail the sidecar
+# tail the sidecar container logs
 echo 'tail the sidecar container logs'
 kubectl logs -f $POD vault-agent
 
-# open browser windows
-echo 'open vault'
-open http://localhost:30000
-echo 'open app'
-open http://localhost:30001

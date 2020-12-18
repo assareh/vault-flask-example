@@ -10,4 +10,4 @@ COPY requirements.txt ./requirements.txt
 RUN pip3 install -r requirements.txt
 COPY application.py ./application.py
 
-ENTRYPOINT ["python3", "-u", "./application.py"]
+# ENTRYPOINT ["python3", "-u", "./application.py"]
