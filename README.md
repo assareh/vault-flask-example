@@ -45,7 +45,12 @@ curl http://localhost:30001/vault
 
 ## reference
 
-Jason's demo repo: https://github.com/jasonodonnell/vault-agent-demo/
+### other demos
+* Jason's demo repo: https://github.com/jasonodonnell/vault-agent-demo/
+
+### documentation
+* [Agent Sidecar Injector](https://www.vaultproject.io/docs/platform/k8s/injector)
+* [Vault Helm Chart](https://www.vaultproject.io/docs/platform/k8s/helm)
 
 ### encode/decode the secret
 ```
