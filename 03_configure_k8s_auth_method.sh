@@ -23,7 +23,7 @@ vault write auth/kubernetes/config \
         kubernetes_ca_cert="$SA_CA_CRT"
 
 # create a new role for sidecar to use
-vault write auth/kubernetes/role/vault-flask-example \
+vault write auth/kubernetes/role/default-vault-flask-example \
         bound_service_account_names=vault-flask-example \
         bound_service_account_namespaces=default \
         policies=vault-flask-example \

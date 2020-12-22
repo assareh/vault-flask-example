@@ -16,7 +16,7 @@ spec:
       annotations:
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/agent-inject-token: "true"
-        vault.hashicorp.com/role: "vault-flask-example"
+        vault.hashicorp.com/role: "default-vault-flask-example"
         vault.hashicorp.com/agent-inject-secret-foo: "secret/data/foo"
         vault.hashicorp.com/secret-volume-path-foo: "/etc/secret-volume"
         vault.hashicorp.com/agent-inject-secret-bar: "secret/data/bar"
